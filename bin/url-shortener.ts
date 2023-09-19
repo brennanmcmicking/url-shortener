@@ -8,3 +8,8 @@ new UrlShortenerStack(app, 'UrlShortenerStack-dev', {
   env: { account: '446708209687', region: 'us-west-2' },
   description: 'dev',
 });
+
+new UrlShortenerStack(app, 'UrlShortenerStack-prod', {
+  env: { account: '446708209687', region: 'us-west-2' },
+  description: 'prod',
+});
