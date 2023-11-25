@@ -10,7 +10,7 @@ SHORT_API_URL = os.environ["SHORT_API_URL"]
 
 HEADERS = {
     "Content-Type": "application/json",
-    "Acces-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "*",
 }
 
 dynamo = boto3.client('dynamodb')
