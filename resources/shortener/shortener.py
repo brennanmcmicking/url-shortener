@@ -75,6 +75,9 @@ def handler(event, context):
                         },
                         'dest': {
                             'S': url
+                        },
+                        'visit_counter': {
+                            'N': '0'
                         }
                     }
                 )

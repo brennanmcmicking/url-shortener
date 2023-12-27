@@ -52,8 +52,8 @@ export class UrlShortenerStack extends cdk.Stack {
     });
 
     table.grantReadWriteData(shortener);
-    table.grantReadData(forwarder);
-    
+    table.grantFullAccess(forwarder);
+
     const shortenerApi = new RestApi(this, `ShortenerApi-${stage}`, {
       deployOptions: {
         stageName: stage,

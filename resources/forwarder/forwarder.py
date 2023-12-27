@@ -32,14 +32,34 @@ def handler(event, context):
     print(event)
 
     if "pathParameters" in event and "hash" in event["pathParameters"]:
+        h = event["pathParameters"]["hash"]
         data = dynamo.get_item(
             TableName=TABLE_NAME,
             Key={
                 'hash': {
-                    'S': event["pathParameters"]["hash"]
+                    'S': h
                 }
             }
         )
+
+        try:
+            dynamo.update_item(
+                TableName=TABLE_NAME,
+                Key={
+                    'hash': {
+                        'S': h 
+                    },
+                }, 
+                UpdateExpression='ADD visit_counter :inc',  
+                ExpressionAttributeValues={
+                    ':inc': {
+                        'N': '1'
+                    }
+                },
+            )
+        except Exception as e:
+            print(e)
+
         if data and "Item" in data:
             print(data)
             return redirect(data['Item']['dest']['S'])
