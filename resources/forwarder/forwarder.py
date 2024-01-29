@@ -42,28 +42,30 @@ def handler(event, context):
             }
         )
 
-        try:
-            dynamo.update_item(
-                TableName=TABLE_NAME,
-                Key={
-                    'hash': {
-                        'S': h 
-                    },
-                }, 
-                UpdateExpression='ADD visit_counter :inc',  
-                ExpressionAttributeValues={
-                    ':inc': {
-                        'N': '1'
-                    }
-                },
-            )
-        except Exception as e:
-            print(e)
-
         if data and "Item" in data:
+            try:
+                dynamo.update_item(
+                    TableName=TABLE_NAME,
+                    Key={
+                        'hash': {
+                            'S': h 
+                        },
+                    }, 
+                    UpdateExpression='ADD visit_counter :inc',  
+                    ExpressionAttributeValues={
+                        ':inc': {
+                            'N': '1'
+                        }
+                    },
+                )
+            except Exception as e:
+                print(e)
+
             print(data)
-            return redirect(data['Item']['dest']['S'])
-        else:
-            return error(404)
+            item = data['Item']
+            if 'dest' in item:
+                dest = item['dest']
+                if 'S' in dest:
+                    return redirect(dest['S'])
 
     return error(404) 
